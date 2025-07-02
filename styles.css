@@ -1,0 +1,277 @@
+body {
+    font-family: 'Nunito', 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, #e6f9e6 0%, #b2f2b2 100%);
+    min-height: 100vh;
+}
+
+.navbar-green {
+    background: rgba(24, 160, 88, 0.80);
+    box-shadow: 0 8px 32px 0 rgba(24, 160, 88, 0.13);
+    backdrop-filter: blur(6px);
+    border-radius: 0 0 32px 32px;
+    border-bottom: 2px solid #4ade80;
+}
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 2px;
+    font-size: 2rem;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(52, 211, 153, 0.14);
+}
+.logo-icon {
+    font-size: 1.6rem;
+    vertical-align: middle;
+}
+.search-bar .form-control {
+    border-radius: 20px 0 0 20px;
+    border: none;
+    background: rgba(255,255,255,0.89);
+    box-shadow: none;
+    font-size: 1rem;
+}
+.btn-green {
+    border-radius: 0 20px 20px 0;
+    background: linear-gradient(90deg, #22c55e 20%, #16a34a 100%);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(34,197,94,0.09);
+}
+.btn-green:hover {
+    background: linear-gradient(90deg, #16a34a 10%, #22c55e 90%);
+    color: #fff;
+}
+
+.news-card.green-glass-card {
+    background: rgba(236,253,245, 0.65);
+    border-radius: 26px;
+    box-shadow: 0 4px 36px rgba(16, 185, 129, 0.09);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid #bbf7d0;
+    transition: transform 0.22s cubic-bezier(.2,.67,.6,1.2), box-shadow 0.22s;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+}
+.shadow-hover:hover {
+    transform: translateY(-8px) scale(1.022);
+    box-shadow: 0 16px 48px rgba(16,185,129,0.17);
+    z-index: 2;
+}
+.news-img-wrap {
+    height: 170px;
+    overflow: hidden;
+    border-radius: 26px 26px 0 0;
+    background: #bbf7d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.news-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+.news-card:hover img {
+    transform: scale(1.07) rotate(-1deg);
+}
+.card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.13rem;
+    color: #166534;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+.card-footer.date-footer {
+    font-size: 0.85rem;
+    color: #22c55e;
+    background: transparent;
+    border-top: none;
+}
+.source-badge {
+    background: linear-gradient(90deg, #bbf7d0 10%, #22c55e 90%);
+    color: #166534;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 6px rgba(34,197,94,0.10);
+}
+.btn-outline-green {
+    background: rgba(255,255,255,0.53);
+    border: 1.4px solid #22c55e;
+    color: #16a34a;
+    backdrop-filter: blur(3px);
+    transition: background 0.2s, color 0.2s;
+}
+.btn-outline-green:hover {
+    background: #22c55e;
+    color: #fff;
+    border: 1.4px solid #16a34a;
+}
+.footer-green {
+    background: rgba(34,197,94,0.10);
+    border-radius: 18px 18px 0 0;
+    font-size: 1.08rem;
+    color: #166534;
+    letter-spacing: 0.04em;
+    box-shadow: 0 -4px 24px rgba(34,197,94,0.07);
+}
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.15rem;
+        letter-spacing: 1px;
+    }
+    .news-img-wrap {
+        height: 110px;
+    }
+    .news-card {
+        border-radius: 13px;
+    }
+}
+
+.floating-icons {
+    position: fixed;
+    bottom: 40px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 999;
+}
+
+.float-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #22c55e 70%, #16a34a 100%);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 18px rgba(34,197,94,0.18);
+    font-size: 1.35rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    text-decoration: none;
+}
+
+.float-icon:hover {
+    transform: scale(1.14);
+    box-shadow: 0 4px 24px rgba(34,197,94,0.36);
+    background: linear-gradient(135deg, #16a34a 90%, #22c55e 100%);
+    color: #fff;
+}
+
+.float-icon.twitter { background: linear-gradient(135deg,#22c55e 70%, #1da1f2 100%);}
+.float-icon.facebook { background: linear-gradient(135deg,#22c55e 70%, #1877f3 100%);}
+.float-icon.github { background: linear-gradient(135deg,#22c55e 70%, #333 100%);}
+.float-icon.top { background: linear-gradient(135deg,#22c55e 70%, #4ade80 100%);}
+
+#ai-chatbot-fab {
+    position: fixed;
+    bottom: 35px;
+    right: 90px;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 2rem;
+    box-shadow: 0 2px 16px rgba(34,197,94,0.17);
+    cursor: pointer;
+    z-index: 1002;
+    transition: background 0.2s;
+}
+#ai-chatbot-fab:hover { background: #22c55e; }
+
+#ai-chatbot {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    width: 340px;
+    max-width: 92vw;
+    background: rgba(236,253,245, 0.97);
+    border-radius: 20px 20px 14px 14px;
+    box-shadow: 0 4px 40px 0 rgba(16,185,129,0.18);
+    display: none;
+    flex-direction: column;
+    z-index: 1003;
+    font-family: 'Nunito', Arial, sans-serif;
+    overflow: hidden;
+}
+#ai-chatbot-header {
+    background: linear-gradient(90deg,#22c55e 70%,#16a34a 100%);
+    color: #fff;
+    padding: 12px 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#ai-chatbot-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+#ai-chatbot-messages {
+    padding: 14px;
+    height: 260px;
+    overflow-y: auto;
+    background: none;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.ai-chatbot-msg-user {
+    align-self: flex-end;
+    background: #bbf7d0;
+    color: #166534;
+    padding: 8px 14px;
+    border-radius: 18px 18px 4px 18px;
+    max-width: 80%;
+    margin-bottom: 2px;
+}
+.ai-chatbot-msg-bot {
+    align-self: flex-start;
+    background: #e0fbe7;
+    color: #166534;
+    padding: 8px 14px;
+    border-radius: 18px 18px 18px 4px;
+    max-width: 80%;
+    margin-bottom: 2px;
+}
+#ai-chatbot-form {
+    display: flex;
+    border-top: 1px solid #bbf7d0;
+    background: #f6fdf9;
+}
+#ai-chatbot-input {
+    flex: 1;
+    border: none;
+    border-radius: 0 0 0 14px;
+    padding: 10px;
+    font-size: 1rem;
+    background: none;
+}
+#ai-chatbot-form button {
+    border: none;
+    background: #16a34a;
+    color: #fff;
+    font-weight: bold;
+    padding: 0 18px;
+    border-radius: 0 0 14px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#ai-chatbot-form button:hover { background: #22c55e; }
+
+@media (max-width: 500px) {
+    #ai-chatbot { right: 2vw; width: 96vw; }
+    #ai-chatbot-fab { right: 15px; }
+}

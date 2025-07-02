@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Green News Aggregator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+    body {
+        background: linear-gradient(120deg, #f0fdf4, #ecfdf5 60%, #bbf7d0 100%);
+        min-height: 100vh;
+        font-family: 'Nunito', Arial, sans-serif;
+    }
+    .navbar {
+        background: linear-gradient(90deg,#22c55e 70%,#16a34a 100%) !important;
+        box-shadow: 0 2px 18px rgba(34,197,94,0.12);
+    }
+    .navbar-brand {
+        font-weight: bold;
+        font-size: 1.7rem;
+        color: #fff !important;
+        letter-spacing: 1px;
+    }
+    .search-bar {
+        margin: 32px auto 20px auto;
+        max-width: 520px;
+        box-shadow: 0 2px 8px rgba(34,197,94,0.09);
+    }
+    .btn-green {
+        background: linear-gradient(90deg,#22c55e 70%,#16a34a 100%);
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        transition: background 0.2s;
+    }
+    .btn-green:hover {
+        background: linear-gradient(90deg,#16a34a 80%,#22c55e 100%);
+        color: #fff;
+    }
+    .news-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        margin-bottom: 110px;
+    }
+    .news-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 2px 20px rgba(34,197,94,0.07);
+        max-width: 370px;
+        min-width: 280px;
+        width: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .news-card:hover {
+        transform: translateY(-8px) scale(1.025);
+        box-shadow: 0 6px 36px rgba(34,197,94,0.18);
+    }
+    .news-image {
+        object-fit: cover;
+        width: 100%;
+        height: 170px;
+        border-bottom: 1px solid #bbf7d0;
+        background: #e4e4e7;
+    }
+    .news-body {
+        padding: 14px 18px 12px 18px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .news-title {
+        font-weight: 700;
+        font-size: 1.14rem;
+        margin-bottom: 7px;
+    }
+    .news-desc {
+        flex: 1;
+        color: #444;
+        font-size: 0.98rem;
+        margin-bottom: 10px;
+    }
+    .news-footer {
+        font-size: 0.95rem;
+        color: #0d9488;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+    }
+    .news-link {
+        color: #22c55e;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 1.05rem;
+        transition: color 0.18s;
+    }
+    .news-link:hover {
+        color: #16a34a;
+        text-decoration: underline;
+    }
+    @media (max-width: 700px) {
+        .news-container {flex-direction: column; align-items: center;}
+        .news-card {max-width: 98vw;}
+    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="fa-solid fa-leaf"></i> Green News Aggregator
+            </span>
+        </div>
+    </nav>
+
+    <!-- Search bar -->
+    <form action="/" method="get" class="d-flex search-bar">
+        <input type="text" class="form-control me-2" name="q" placeholder="Search for news..." value="{{ query or '' }}">
+        <button class="btn btn-green" type="submit">Search</button>
+    </form>
+
+    <!-- News Cards -->
+    <div class="container-fluid">
+        <div class="news-container">
+            {% if articles %}
+                {% for article in articles %}
+                    <div class="news-card">
+                        {% if article.urlToImage %}
+                            <img src="{{ article.urlToImage }}" alt="image" class="news-image">
+                        {% else %}
+                            <img src="https://source.unsplash.com/370x170/?news,{{ article.title|urlencode }}" alt="image" class="news-image">
+                        {% endif %}
+                        <div class="news-body">
+                            <div class="news-title">{{ article.title }}</div>
+                            <div class="news-desc">{{ article.description or 'No description available.' }}</div>
+                            <div class="news-footer">
+                                <span>{{ article.source.name }}</span>
+                                <a href="{{ article.url }}" target="_blank" class="news-link">Read more <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning w-100 text-center mt-4">
+                    No articles found for "{{ query }}". Try a different search.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Floating Action Icons -->
+    <div class="floating-icons">
+        <a href="https://twitter.com/" target="_blank" class="float-icon twitter" title="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://facebook.com/" target="_blank" class="float-icon facebook" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://github.com/" target="_blank" class="float-icon github" title="GitHub">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="#" class="float-icon top" title="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <!-- AI Chatbot Widget -->
+    <div id="ai-chatbot">
+      <div id="ai-chatbot-header">
+        <span>🧑‍💻 News Assistant</span>
+        <button id="ai-chatbot-close">&times;</button>
+      </div>
+      <div id="ai-chatbot-messages"></div>
+      <form id="ai-chatbot-form">
+        <input type="text" id="ai-chatbot-input" autocomplete="off" placeholder="Ask me anything about the news...">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+    <button id="ai-chatbot-fab">💬</button>
+
+    <!-- Chatbot & Floating Icons CSS -->
+    <style>
+    .floating-icons {
+        position: fixed;
+        bottom: 40px;
+        right: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        z-index: 999;
+    }
+    .float-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #22c55e 70%, #16a34a 100%);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 18px rgba(34,197,94,0.18);
+        font-size: 1.35rem;
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        text-decoration: none;
+    }
+    .float-icon:hover {
+        transform: scale(1.14);
+        box-shadow: 0 4px 24px rgba(34,197,94,0.36);
+        background: linear-gradient(135deg, #16a34a 90%, #22c55e 100%);
+        color: #fff;
+    }
+    .float-icon.twitter { background: linear-gradient(135deg,#22c55e 70%, #1da1f2 100%);}
+    .float-icon.facebook { background: linear-gradient(135deg,#22c55e 70%, #1877f3 100%);}
+    .float-icon.github { background: linear-gradient(135deg,#22c55e 70%, #333 100%);}
+    .float-icon.top { background: linear-gradient(135deg,#22c55e 70%, #4ade80 100%);}
+    /* AI Chatbot widget styles */
+    #ai-chatbot-fab {
+        position: fixed;
+        bottom: 35px;
+        right: 90px;
+        background: #16a34a;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        font-size: 2rem;
+        box-shadow: 0 2px 16px rgba(34,197,94,0.17);
+        cursor: pointer;
+        z-index: 1002;
+        transition: background 0.2s;
+    }
+    #ai-chatbot-fab:hover { background: #22c55e; }
+    #ai-chatbot {
+        position: fixed;
+        bottom: 100px;
+        right: 40px;
+        width: 340px;
+        max-width: 92vw;
+        background: rgba(236,253,245, 0.97);
+        border-radius: 20px 20px 14px 14px;
+        box-shadow: 0 4px 40px 0 rgba(16,185,129,0.18);
+        display: none;
+        flex-direction: column;
+        z-index: 1003;
+        font-family: 'Nunito', Arial, sans-serif;
+        overflow: hidden;
+    }
+    #ai-chatbot-header {
+        background: linear-gradient(90deg,#22c55e 70%,#16a34a 100%);
+        color: #fff;
+        padding: 12px 16px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    #ai-chatbot-close {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.6rem;
+        cursor: pointer;
+    }
+    #ai-chatbot-messages {
+        padding: 14px;
+        height: 260px;
+        overflow-y: auto;
+        background: none;
+        font-size: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .ai-chatbot-msg-user {
+        align-self: flex-end;
+        background: #bbf7d0;
+        color: #166534;
+        padding: 8px 14px;
+        border-radius: 18px 18px 4px 18px;
+        max-width: 80%;
+        margin-bottom: 2px;
+    }
+    .ai-chatbot-msg-bot {
+        align-self: flex-start;
+        background: #e0fbe7;
+        color: #166534;
+        padding: 8px 14px;
+        border-radius: 18px 18px 18px 4px;
+        max-width: 80%;
+        margin-bottom: 2px;
+    }
+    #ai-chatbot-form {
+        display: flex;
+        border-top: 1px solid #bbf7d0;
+        background: #f6fdf9;
+    }
+    #ai-chatbot-input {
+        flex: 1;
+        border: none;
+        border-radius: 0 0 0 14px;
+        padding: 10px;
+        font-size: 1rem;
+        background: none;
+    }
+    #ai-chatbot-form button {
+        border: none;
+        background: #16a34a;
+        color: #fff;
+        font-weight: bold;
+        padding: 0 18px;
+        border-radius: 0 0 14px 0;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    #ai-chatbot-form button:hover { background: #22c55e; }
+    @media (max-width: 500px) {
+        #ai-chatbot { right: 2vw; width: 96vw; }
+        #ai-chatbot-fab { right: 15px; }
+    }
+    </style>
+
+    <!-- Chatbot JS -->
+    <script>
+    const fab = document.getElementById('ai-chatbot-fab');
+    const chatbot = document.getElementById('ai-chatbot');
+    const closeBtn = document.getElementById('ai-chatbot-close');
+    const form = document.getElementById('ai-chatbot-form');
+    const input = document.getElementById('ai-chatbot-input');
+    const messages = document.getElementById('ai-chatbot-messages');
+
+    fab.onclick = () => { chatbot.style.display = 'flex'; fab.style.display = 'none'; setTimeout(()=>input.focus(), 250);}
+    closeBtn.onclick = () => { chatbot.style.display = 'none'; fab.style.display = 'block'; }
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (!msg) return;
+      messages.innerHTML += `<div class="ai-chatbot-msg-user">${escapeHtml(msg)}</div>`;
+      input.value = "";
+      messages.scrollTop = messages.scrollHeight;
+      messages.innerHTML += `<div class="ai-chatbot-msg-bot" id="ai-bot-typing">...</div>`;
+      messages.scrollTop = messages.scrollHeight;
+      // Send to backend
+      const res = await fetch('/ai-chat', {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: msg})
+      });
+      const data = await res.json();
+      document.getElementById('ai-bot-typing').remove();
+      messages.innerHTML += `<div class="ai-chatbot-msg-bot">${escapeHtml(data.reply)}</div>`;
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      var map = {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"};
+      return text.replace(/[&<>"']/g, m => map[m]);
+    }
+    </script>
+
+    <!-- Bootstrap JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
